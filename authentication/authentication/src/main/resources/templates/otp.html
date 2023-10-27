@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OTP VERIFICATION</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4; 
+            background-image: url('https://mwi.usma.edu/wp-content/uploads/2016/02/cyber-security-5.jpg'); 
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            width: 400px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #fff;
+            background-image: url('https://cdn.wallpapersafari.com/75/21/SaQZxO.jpg'); 
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        input {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin-bottom: 15px;
+        }
+
+        button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 2px;
+            padding: 10px;
+            cursor: pointer;
+            width: 45%;
+        }
+
+        button:hover {
+            background-color: green;
+        }
+
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3498db;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+            margin-top: 10px;
+            display: none;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .success-message {
+            color: green;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>OTP Verification</h1>
+        <form id="otpForm">
+            <div>
+                <label for="mobile">Mobile Number:</label>
+                <input type="text" id="mobile" name="mobile" required minlength="10" maxlength="10" placeholder="Enter your mobile number">
+            </div>
+            <div>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required placeholder="Enter your email address">
+            </div>
+            <button type="button" onclick="generateOTP()">
+                Generate OTP
+            </button>
+            <div id="otpGroup" style="display: none;">
+                <label for="otp">Enter OTP:</label>
+                <input type="text" id="otp" name="otp" required>
+                <div class="loader"></div>
+                <div class="success-message">Otp Verified Successfully</div>
+            </div>
+        </form>
+    </div>
+
+    <script th:inline="javascript">
+        let generatedOTP;
+
+        function generateRandomOTP() {
+            return Math.floor(100000 + Math.random() * 900000).toString();
+        }
+
+        function generateOTP() {
+            const mobile = document.getElementById("mobile").value;
+            const email = document.getElementById("email").value;
+            const loader = document.querySelector(".loader");
+            const successMessage = document.querySelector(".success-message");
+
+            if (!mobile || !email) {
+                alert("Mobile number and email are mandatory.");
+                return;
+            }
+
+            generatedOTP = generateRandomOTP();
+            alert(`OTP sent to your registered mobile number: ${generatedOTP}...please Enter ok to Autofill otp `);
+            document.getElementById("otp").value = generatedOTP; 
+            document.getElementById("otpGroup").style.display = "block";
+            loader.style.display = "block";
+
+           
+            setTimeout(() => {
+                loader.style.display = "none";
+                successMessage.style.display = "block";
+
+               
+                setTimeout(() => {
+                    window.location.href = "/dashboard";
+                }, 3000);
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

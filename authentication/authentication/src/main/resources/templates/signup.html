@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Banking</title>
+    <style>
+       
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url(https://wallpaperaccess.com/full/732220.jpg);
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .container {
+            width: 400px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: rgba(255, 255, 255, 0.8);
+            text-align: center;
+        }
+        .form-group {
+            margin-bottom: 10px;
+        }
+        h1 {
+            color: #333;
+        }
+        .options {
+            text-align: center;
+        }
+        .bank-image {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 20px;
+        }
+        button {
+    background-color: rgb(0, 0, 255);
+    color: white;
+    padding: 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-right: 10px; /* Added margin between buttons */
+}
+
+button:hover {
+    background-color: green;
+}
+
+    </style>
+</head>
+<body>
+    <div class="container" id="loginContainer">
+        <img th:src="@{https://tse2.mm.bing.net/th?id=OIP.Ru8PL0KYLo9XnIn2NWqUvAHaEA&pid=Api&P=0&h=180}" alt="Secure Bank Background" class="bank-image">
+        <h1>Secure Bank</h1>
+        <form id="loginForm">
+            <div class="form-group">
+            
+            </div>
+            <div class="options">
+                <a th:href="@{/login}"><button type="button">Login</button></a>
+                <a th:href="@{/register}"><button type="button">Signup</button></a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forgot Password | Secure Banking</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+    <style>
+     body {
+            font-family: 'Roboto', sans-serif;
+            background-image: url(https://cdn.wallpapersafari.com/75/21/SaQZxO.jpg);
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            color: #333;
+        }
+
+        .container {
+            width: 400px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: slategrey;
+            text-align: center;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            background-color: #f8f8f8;
+            color: #333;
+        }
+
+        button {
+            background-color: #3498db;
+            color: #fff;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        button:hover {
+            background-color: green;
+        }
+    </style>
+    
+</head>
+
+
+<body>
+    <div class="container">
+        <h1>Forgot Password</h1>
+        <form th:action="@{/login.html}" method="post">
+            <div>
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" th:required="required" placeholder="Enter your username">
+            </div>
+            <div>
+                <label for="mobileNumber">Mobile Number:</label>
+                <input type="text" id="mobileNumber" name="mobileNumber" th:required="required"
+                    placeholder="Enter your mobile number">
+            </div>
+            <div>
+                <label for="otp">OTP:</label>
+                <input type="text" id="otp" name="otp" th:required="required" maxlength="6" minlength="6"
+                    placeholder="Enter the OTP received">
+            </div>
+            <button id="generateOTPBtn" type="button">Generate OTP</button>
+            <div>
+                <label for="newPassword">New Password:</label>
+                <input type="password" id="newPassword" name="newPassword" maxlength="8" minlength="8"
+                    th:required="required" placeholder="Enter your new password">
+            </div>
+            <button type="button" onclick="forgotPassword()">Change Password</button>
+        </form>
+    </div>
+</body>
+
+
+<script>
+    function generateRandomOTP() {
+        return Math.floor(100000 + Math.random() * 900000);
+    }
+function forgotPassword() {
+  
+    var oldPassword = localStorage.getItem("oldPassword");
+
+   
+    oldPassword = oldPassword || "";
+
+    
+    var newPassword = document.getElementById("newPassword").value;
+
+    
+    localStorage.setItem("oldPassword", newPassword);
+
+   
+    alert("Password changed. Press OK to redirect to the login page");
+    window.location.href = "/login";
+}
+
+
+    document.addEventListener("DOMContentLoaded", function () {
+        var generateOTPBtn = document.getElementById("generateOTPBtn");
+        var otpInput = document.getElementById("otp");
+        var generatedOTPElement = document.getElementById("generatedOTP");
+
+        generateOTPBtn.addEventListener("click", function () {
+            var otp = generateRandomOTP();
+            alert(`OTP sent to your mobile number: ${otp}. Press OK to Autofill OTP`);
+
+            otpInput.value = otp;
+            generatedOTPElement.innerText = otp;
+            otpInput.focus();
+        });
+    });
+</script>
+
+
+</html>

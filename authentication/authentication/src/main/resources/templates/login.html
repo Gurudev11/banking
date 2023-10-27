@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Secure Banking</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-image: url(https://getwallpapers.com/wallpaper/full/0/b/7/465056.jpg);
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            width: 400px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: slategrey;
+            background-image: url('https://cdn.wallpapersafari.com/75/21/SaQZxO.jpg');
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .image-grid img {
+            width: 100%;
+            height: 120px;
+
+            object-fit: cover;
+            cursor: pointer;
+            border: 2px solid transparent;
+            border-radius: 5px;
+            transition: border-color 0.3s ease-in-out;
+        }
+
+        .image-grid img.clicked {
+            border-color: #3498db;
+        }
+
+        .options {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        button {
+            background-color: #3498db;
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        button:hover {
+            background-color: green;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            background-color: #f8f8f8;
+            color: #333;
+        }
+
+        
+        button[type="button"] {
+            background-color: #3498db;
+            color: #fff;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        button[type="button"]:hover {
+            background-color: green;
+        }
+
+     
+        a.forgot-password {
+            color: #3498db;
+            text-decoration: none;
+            margin-top: 10px;
+            display: inline-block;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container" id="loginContainer">
+        <h1>Login to Secure Bank</h1>
+        <form id="loginForm">
+            <div class="form-group">
+
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required pattern=".{5,}"
+                    title="Username must be at least 5 characters long" minlength="8" maxlength="16"
+                    placeholder="Please Enter Username">
+                <br>
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required pattern=".{8,}"
+                    title="Password must be at least 8 characters long" minlength="8" maxlength="8"
+                    placeholder="Please Enter Password">
+            </div>
+            <div class="form-group">
+
+                <div class="image-grid">
+                    <img src="https://tse3.mm.bing.net/th?id=OIP.djJ_pualO4clbFDQl6cO9AAAAA&pid=Api&P=0&h=180"
+                        alt="Image 1" onclick="handleImageClick(1)">
+                    <img src="https://i.pinimg.com/originals/07/02/d2/0702d2024a347343f7d33f2a5e717442.jpg"
+                        alt="Image 2" onclick="handleImageClick(2)">
+                    <img src="https://tse2.mm.bing.net/th?id=OIP.j0cX9xaBYCxyJLVZJcblRgHaE5&pid=Api&P=0&h=180"
+                        alt="Image 3" onclick="handleImageClick(3)">
+                    <img src="https://tse1.mm.bing.net/th?id=OIP.-5pSv1ReSUZ_rKKCXs6-LgAAAA&pid=Api&P=0&h=180"
+                        alt="Image 4" onclick="handleImageClick(4)">
+                    <img src="https://tse4.mm.bing.net/th?id=OIP.M1NQUtcIqUdX_MFFC54k_QHaE6&pid=Api&P=0&h=180"
+                        alt="Image 5" onclick="handleImageClick(5)">
+                    <img src="https://tse3.mm.bing.net/th?id=OIP.oku__A0i5w4f8T0XRNKWpAAAAA&pid=Api&P=0&h=180"
+                        alt="Image 6" onclick="handleImageClick(6)">
+                </div>
+
+                <div class="options">
+                    <button type="button" onclick="submitForm()">Submit</button>
+                    <a th:href="@{/signup}"><button type="button">Back</button></a>
+                </div>
+
+                <!-- Forgot Password link -->
+                <a href="#" class="forgot-password" onclick="forgotPassword()">Forgot Password?</a>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        let clickedImages = [];
+        let generatedOTP = '';
+        let step = 1;
+
+       function handleImageClick(imageNumber) {
+    const index = clickedImages.indexOf(imageNumber);
+
+    if (index === -1) {
+        clickedImages.push(imageNumber);
+
+        
+        if (clickedImages.includes(1) && clickedImages.includes(3)) {
+            alert("Authentication Successful!");
+        } else if ([2, 4, 5, 6].includes(imageNumber)) {
+            alert("Authentication Failed!");
+        }
+    }
+}
+
+
+       function submitForm() {
+    const enteredUsername = document.getElementById('username').value;
+    const enteredPassword = document.getElementById('password').value;
+
+    if (enteredUsername.trim() === '' || enteredPassword.trim() === '') {
+        alert("Please enter a valid username and password.");
+        return;
+    }
+
+  
+    const users = JSON.parse(localStorage.getItem("users")) || [];
+    const user = users.find(u => u.username === enteredUsername && u.password === enteredPassword);
+
+    if (user) {
+        if (clickedImages.length === 0) {
+            alert("Please click on the images to complete authentication.");
+            return;
+        }
+
+        
+        if (clickedImages.includes(1) && clickedImages.includes(3)) {
+            alert("Login Successful!");
+            window.location.href = "/otp";
+        } else {
+            alert("Oops! You are not an authorized user!");
+        }
+    } else {
+      
+        alert("Invalid username or password!");
+    }
+}
+
+        function forgotPassword() {
+            window.location.href = "/link";
+        }
+    </script>
+</body>
+
+</html>

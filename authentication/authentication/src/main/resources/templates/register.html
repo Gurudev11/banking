@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEW USER REGISTRATION - SECURE BANKING</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('https://wallpaperaccess.com/full/2312232.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            width: 400px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: rgba(255, 255, 255, 0.9);
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        input[type="password"],
+        input[type="tel"] {
+            width: calc(100% - 22px);
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        #generateOTPBtn,
+        button[type="submit"] {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 2px;
+            padding: 5px 10px;
+            cursor: pointer;
+            width: 50%;
+        }
+
+       
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>New User Registration</h1>
+        <form id="registrationForm">
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required minlength="8" maxlength="16" placeholder="Enter Your Username">
+            </div>
+            <div class="form-group">
+                <label for="mobile">Mobile Number:</label>
+                <input type="tel" id="mobile" name="mobile" required minlength="10" maxlength="10" placeholder="Enter Your Mobile Number">
+            </div>
+            <button id="generateOTPBtn" type="button">Generate OTP</button>
+            <div class="form-group" id="otpGroup" style="display: none;">
+                <label for="otp">Enter OTP:</label>
+                <input type="text" id="otp" name="otp" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required minlength="8" maxlength="8" placeholder="Enter Your Password">
+            </div>
+            <div class="form-group">
+                <label for="confirmPassword">Confirm Password:</label>
+                <input type="password" id="confirmPassword" name="confirmPassword" required minlength="8" maxlength="8" placeholder="Re-enter Your Password">
+            </div>
+            <button type="submit">Register</button>
+        </form>
+    </div>
+
+    <script>
+    const generateOTPBtn = document.getElementById("generateOTPBtn");
+    const otpGroup = document.getElementById("otpGroup");
+    const registrationForm = document.getElementById("registrationForm");
+    const otpInput = document.getElementById("otp");
+
+    generateOTPBtn.addEventListener("click", function () {
+       
+        const otp = generateRandomOTP();
+        alert(`OTP sent to your mobile number: ${otp} and Press OK to Autofill otp`);
+        
+       
+        otpInput.value = otp;
+
+        otpGroup.style.display = "block";
+    });
+
+ 
+registrationForm.addEventListener("submit", function (e) {
+    e.preventDefault();
+    const username = document.getElementById("username").value;
+    const mobile = document.getElementById("mobile").value;
+    const enteredOtp = document.getElementById("otp").value;
+    const password = document.getElementById("password").value;
+    const confirmPassword = document.getElementById("confirmPassword").value;
+
+   
+    if (password !== confirmPassword) {
+        alert("Password and Confirm Password do not match. Please re-enter.");
+        return;
+    }
+
+   
+    const users = JSON.parse(localStorage.getItem("users")) || [];
+    users.push({ username, mobile, password });
+    localStorage.setItem("users", JSON.stringify(users));
+
+    alert("Account created successfully!");
+
+    window.location.href = "/signup";
+});
+
+
+    let generatedOtp; 
+
+    function generateRandomOTP() {
+        generatedOtp = Math.floor(100000 + Math.random() * 900000).toString();
+        return generatedOtp;
+    }
+</script>
+
+</body>
+</html>
