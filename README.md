@@ -36,3 +36,33 @@ To run this project locally, you'll need the following:
 ### Installation
 
 1. Clone the repository to your local machine:
+
+2. Build and run the project using Maven:
+   
+3.  Access the application in your web browser at [http://localhost:8080](http://localhost:8080).
+
+## Usage
+
+1. Register for a new account or log in with your credentials.
+2. Create a bank account.
+3. Deposit or withdraw funds from your account.
+4. View your transaction history and account statement.
+
+## Contributing
+
+We welcome contributions to enhance this banking application. To contribute, follow these steps:
+
+1. Fork the repository.
+2. Create a new branch for your feature or bug fix.
+3. Make your changes and ensure the project still works.
+4. Submit a pull request, explaining the changes made and their purpose.
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
+
+## Contact
+
+If you have any questions or suggestions, feel free to contact us at [gurudevz237@gmail.com].
+
+
