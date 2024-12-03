@@ -63,6 +63,6 @@ This project is licensed under the [MIT License](LICENSE).
 
 ## Contact
 
-If you have any questions or suggestions, feel free to contact us at [gurudevz237@gmail.com].
+If you have any questions or suggestions, feel free to contact us at [dev.sivaguru@gmail.com].
 
 
